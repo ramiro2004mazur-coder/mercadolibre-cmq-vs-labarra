@@ -1,20 +1,23 @@
 """
 Scraper de MercadoLibre para las tiendas oficiales CMQ y La Barra.
 
-Requiere una sesion ya autenticada (cookies) provista por el usuario. Este script
-NUNCA envia usuario/contrasena ni intenta resolver verificaciones: si la sesion
-esta vencida, lo detecta, lo loguea como error, y sigue con la siguiente tienda.
+No usa login ni cookies de sesion. Se probo que el listado completo de categoria
+("Cervezas") y las fichas de producto individuales estan detras de un muro de
+verificacion de cuenta, y que incluso con una sesion autenticada valida, acceder
+a ese listado desde un browser automatizado dispara un captcha de MercadoLibre
+("captcha/wall/logged"). No vamos a intentar resolver ni evadir eso.
 
-Cookies: se leen de la variable de entorno ML_SESSION_COOKIES_JSON (un JSON con
-una lista de cookies, formato estandar de exportadores tipo "Get cookies.txt" /
-DevTools). Para uso local, poner ese mismo JSON en scraper/.cookies.local.json
-(gitignored).
+En cambio, este scraper lee la home publica de cada tienda (sin login, sin
+captcha, confirmado en vivo), que muestra varios carruseles curados por el
+vendedor (Productos recomendados, Mas vendidos, Elegidos para vos, etc.) con
+precio de lista, % OFF, precio final y cuotas. No es garantia de cubrir el 100%
+del catalogo de cada tienda, pero es la unica via que no viola verificaciones
+ni requiere credenciales.
 """
 from __future__ import annotations
 
 import argparse
 import json
-import os
 import re
 import sys
 from datetime import datetime
@@ -30,10 +33,8 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
 RAW_DIR = DATA_DIR / "raw"
 HISTORICO_PATH = DATA_DIR / "historico.json"
-LOCAL_COOKIES_PATH = Path(__file__).resolve().parent / ".cookies.local.json"
 
 TZ_AR = ZoneInfo("America/Argentina/Buenos_Aires")
-MAX_PAGINAS = 25
 
 ITEM_ID_RE = re.compile(r"item_id%3A(MLA\d+)|/(MLA\d+)-")
 
@@ -44,11 +45,11 @@ USER_AGENT = (
 
 EXTRACT_JS = """
 () => {
-  const cards = document.querySelectorAll('li.ui-search-layout__item, .poly-card, div.ui-search-result__wrapper');
+  const cards = document.querySelectorAll('.poly-card, li.ui-search-layout__item');
   const seen = new Set();
   const out = [];
   cards.forEach(card => {
-    const titleEl = card.querySelector('.poly-component__title, h2.ui-search-item__title, h3.poly-component__title-wrapper a, a.ui-search-link');
+    const titleEl = card.querySelector('.poly-component__title, h2.ui-search-item__title');
     if (!titleEl) return;
     const titulo = (titleEl.textContent || '').trim();
     const anchor = titleEl.tagName === 'A' ? titleEl : titleEl.closest('a');
@@ -57,9 +58,10 @@ EXTRACT_JS = """
     seen.add(href);
 
     const prevEl = card.querySelector('.poly-price__previous .andes-money-amount__fraction, s .andes-money-amount__fraction');
-    const curEl = card.querySelector('.poly-price__current .andes-money-amount__fraction, .poly-component__price .andes-money-amount__fraction:not(.poly-price__previous .andes-money-amount__fraction), .price-tag-fraction');
+    const curEl = card.querySelector('.poly-price__current .andes-money-amount__fraction, .price-tag-fraction');
     const discEl = card.querySelector('.poly-price__disc-label, .ui-search-price__discount, .andes-money-amount__discount');
     const instEl = card.querySelector('.poly-price__installments, .ui-search-installments');
+    const instFracEl = instEl ? instEl.querySelector('.andes-money-amount__fraction') : null;
 
     out.push({
       titulo,
@@ -67,7 +69,7 @@ EXTRACT_JS = """
       fleje_raw: prevEl ? prevEl.textContent : null,
       ptc_raw: curEl ? curEl.textContent : null,
       disc_raw: discEl ? discEl.textContent : null,
-      inst_raw: instEl ? instEl.textContent : null,
+      inst_raw: instFracEl ? instFracEl.textContent : null,
     });
   });
   return out;
@@ -77,24 +79,6 @@ EXTRACT_JS = """
 
 def log(msg: str) -> None:
     print(f"[{datetime.now(TZ_AR).isoformat(timespec='seconds')}] {msg}", file=sys.stderr)
-
-
-def cargar_cookies() -> list[dict]:
-    raw = os.environ.get("ML_SESSION_COOKIES_JSON")
-    if not raw and LOCAL_COOKIES_PATH.exists():
-        raw = LOCAL_COOKIES_PATH.read_text(encoding="utf-8")
-    if not raw:
-        raise RuntimeError(
-            "No hay cookies de sesion disponibles. Configura ML_SESSION_COOKIES_JSON "
-            "(o scraper/.cookies.local.json para desarrollo local)."
-        )
-    cookies = json.loads(raw)
-    # Normalizamos a lo que espera Playwright (name, value, domain, path, ...).
-    for c in cookies:
-        c.setdefault("path", "/")
-        if "domain" not in c:
-            c["domain"] = ".mercadolibre.com.ar"
-    return cookies
 
 
 def parse_money(texto: str | None) -> float | None:
@@ -124,104 +108,84 @@ def extraer_item_id(url: str) -> str | None:
     return match.group(1) or match.group(2)
 
 
-def hay_muro_verificacion(page) -> bool:
-    return "account-verification" in page.url or "/gz/" in page.url
+def hay_muro(page) -> bool:
+    return "account-verification" in page.url or "captcha" in page.url or "/gz/" in page.url
 
 
 def scrapear_tienda(page, tienda_key: str, store: dict, errores: list[str]) -> list[dict]:
     productos: list[dict] = []
-    log(f"[{tienda_key}] navegando a {store['cervezas_url']}")
+    log(f"[{tienda_key}] navegando a {store['home_url']}")
     try:
-        page.goto(store["cervezas_url"], wait_until="domcontentloaded", timeout=30000)
+        page.goto(store["home_url"], wait_until="domcontentloaded", timeout=30000)
     except PWTimeout:
-        errores.append(f"[{tienda_key}] timeout al cargar el listado de categoria")
+        errores.append(f"[{tienda_key}] timeout al cargar la home de la tienda")
         return productos
 
-    if hay_muro_verificacion(page):
-        errores.append(
-            f"[{tienda_key}] sesion no autenticada o expirada (redirect a account-verification) "
-            "- actualizar el secret ML_SESSION_COOKIES_JSON"
-        )
+    if hay_muro(page):
+        errores.append(f"[{tienda_key}] la home publica devolvio un muro inesperado ({page.url})")
         return productos
 
-    vistos_urls: set[str] = set()
-    for pagina in range(1, MAX_PAGINAS + 1):
+    try:
+        page.wait_for_selector(".poly-card, li.ui-search-layout__item", timeout=15000)
+    except PWTimeout:
+        errores.append(f"[{tienda_key}] no se encontraron productos en la home (posible cambio de layout)")
+        return productos
+
+    # Los carruseles de abajo (mas vendidos, elegidos para vos) a veces cargan
+    # perezosamente al hacer scroll; forzamos un scroll completo antes de leer el DOM.
+    try:
+        alto_previo = -1
+        for _ in range(6):
+            alto = page.evaluate("document.body.scrollHeight")
+            if alto == alto_previo:
+                break
+            page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+            page.wait_for_timeout(400)
+            alto_previo = alto
+    except Exception:  # noqa: BLE001 - el scroll es best-effort, no crítico
+        pass
+
+    crudos = page.evaluate(EXTRACT_JS)
+    for item in crudos:
         try:
-            page.wait_for_selector(
-                "li.ui-search-layout__item, .poly-card, div.ui-search-result__wrapper",
-                timeout=15000,
-            )
-        except PWTimeout:
-            if pagina == 1:
-                errores.append(f"[{tienda_key}] no se encontraron productos en la pagina 1 (posible cambio de layout)")
-            break
-
-        crudos = page.evaluate(EXTRACT_JS)
-        nuevos = 0
-        for item in crudos:
-            if item["url"] in vistos_urls:
+            titulo = item["titulo"]
+            if not es_cerveza(titulo):
                 continue
-            vistos_urls.add(item["url"])
-            nuevos += 1
 
-            try:
-                titulo = item["titulo"]
-                if not es_cerveza(titulo):
-                    continue
+            item_id = extraer_item_id(item["url"])
+            if not item_id:
+                errores.append(f"[{tienda_key}] no se pudo extraer item_id de: {item['url']}")
+                continue
 
-                item_id = extraer_item_id(item["url"])
-                if not item_id:
-                    errores.append(f"[{tienda_key}] no se pudo extraer item_id de: {item['url']}")
-                    continue
+            ptc = parse_money(item["ptc_raw"])
+            fleje = parse_money(item["fleje_raw"]) or ptc
+            dinamica = parse_descuento(item["disc_raw"])
+            if dinamica is None and fleje and ptc and fleje > 0:
+                dinamica = round(1 - (ptc / fleje), 4)
+            cuotas = parse_money(item["inst_raw"])
 
-                ptc = parse_money(item["ptc_raw"])
-                fleje = parse_money(item["fleje_raw"]) or ptc
-                dinamica = parse_descuento(item["disc_raw"])
-                if dinamica is None and fleje and ptc and fleje > 0:
-                    dinamica = round(1 - (ptc / fleje), 4)
-                cuotas = parse_money(item["inst_raw"])
+            if ptc is None:
+                errores.append(f"[{tienda_key}] sin precio final parseable: {titulo!r}")
+                continue
 
-                if ptc is None:
-                    errores.append(f"[{tienda_key}] sin precio final parseable: {titulo!r}")
-                    continue
+            atributos = parse_producto(titulo)
+            productos.append(
+                {
+                    "tienda": tienda_key,
+                    "sku": item_id,
+                    "titulo": titulo,
+                    "url": item["url"].split("#")[0],
+                    "fleje": fleje,
+                    "ptc": ptc,
+                    "dinamica": dinamica or 0,
+                    "cuotas": cuotas,
+                    **atributos,
+                }
+            )
+        except Exception as exc:  # noqa: BLE001 - un item roto no debe tumbar la corrida
+            errores.append(f"[{tienda_key}] error parseando item ({item.get('url')}): {exc}")
 
-                atributos = parse_producto(titulo)
-                productos.append(
-                    {
-                        "tienda": tienda_key,
-                        "sku": item_id,
-                        "titulo": titulo,
-                        "url": item["url"].split("#")[0],
-                        "fleje": fleje,
-                        "ptc": ptc,
-                        "dinamica": dinamica or 0,
-                        "cuotas": cuotas,
-                        **atributos,
-                    }
-                )
-            except Exception as exc:  # noqa: BLE001 - un item roto no debe tumbar la corrida
-                errores.append(f"[{tienda_key}] error parseando item ({item.get('url')}): {exc}")
-
-        log(f"[{tienda_key}] pagina {pagina}: {nuevos} items nuevos, {len(productos)} cervezas acumuladas")
-        if nuevos == 0:
-            break
-
-        siguiente = page.query_selector(
-            "a.andes-pagination__link[title='Siguiente'], li.andes-pagination__button--next a"
-        )
-        if not siguiente:
-            break
-        try:
-            siguiente.click()
-            page.wait_for_load_state("domcontentloaded", timeout=15000)
-        except PWTimeout:
-            errores.append(f"[{tienda_key}] timeout al pasar a la pagina siguiente, corto paginacion")
-            break
-
-        if hay_muro_verificacion(page):
-            errores.append(f"[{tienda_key}] sesion expiro a mitad de la paginacion (pagina {pagina + 1})")
-            break
-
+    log(f"[{tienda_key}] {len(productos)} cervezas encontradas en la home publica")
     return productos
 
 
@@ -298,8 +262,6 @@ def main() -> int:
     errores: list[str] = []
     todos_productos: list[dict] = []
 
-    cookies = cargar_cookies()
-
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         context = browser.new_context(
@@ -308,7 +270,6 @@ def main() -> int:
             locale="es-AR",
             timezone_id="America/Argentina/Buenos_Aires",
         )
-        context.add_cookies(cookies)
         page = context.new_page()
 
         for tienda_key, store in STORES.items():
@@ -337,8 +298,8 @@ def main() -> int:
     HISTORICO_PATH.write_text(json.dumps(historico, ensure_ascii=False, indent=2), encoding="utf-8")
     log(f"Historico actualizado: {HISTORICO_PATH} ({len(historico['productos'])} productos, {len(historico['runs'])} corridas)")
 
-    if not todos_productos and errores:
-        log("La corrida no trajo NINGUN producto de ninguna tienda. Revisar sesion/cookies.")
+    if not todos_productos:
+        log("La corrida no trajo NINGUN producto de ninguna tienda.")
         return 1
     return 0
 

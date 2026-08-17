@@ -1,5 +1,4 @@
 __pycache__/
 *.pyc
 .venv/
-scraper/.cookies.local.json
 .DS_Store

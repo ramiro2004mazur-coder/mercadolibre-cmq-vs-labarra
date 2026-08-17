@@ -5,21 +5,17 @@ STORES = {
         "nombre": "Cervecería y Maltería Quilmes",
         "slug": "cerveceria-y-malteria-quilmes",
         "home_url": "https://www.mercadolibre.com.ar/tienda/cerveceria-y-malteria-quilmes",
-        "cervezas_url": (
-            "https://listado.mercadolibre.com.ar/tienda/cerveceria-y-malteria-quilmes"
-            "/listado/alimentos-bebidas/bebidas/cervezas/"
-        ),
     },
     "LA_BARRA": {
         "nombre": "La Barra (CCU)",
         "slug": "la-barra",
         "home_url": "https://www.mercadolibre.com.ar/tienda/la-barra",
-        "cervezas_url": (
-            "https://listado.mercadolibre.com.ar/tienda/la-barra"
-            "/listado/alimentos-bebidas/bebidas/cervezas/"
-        ),
     },
 }
+# Nota: el listado completo de categoria ("Cervezas") de cada tienda
+# (listado.mercadolibre.com.ar/tienda/{slug}/listado/.../cervezas/) requiere
+# login y dispara un captcha incluso con sesion autenticada. No lo usamos:
+# el scraper lee unicamente la home publica de cada tienda (home_url).
 
 # Orden importa: las marcas mas especificas / mas largas van primero para evitar
 # matches parciales (ej. "Andes Origen" antes que "Andes", "Corona Cero" antes que "Corona").

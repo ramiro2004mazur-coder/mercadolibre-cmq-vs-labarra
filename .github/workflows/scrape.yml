@@ -44,8 +44,6 @@ jobs:
         run: playwright install --with-deps chromium
 
       - name: Correr scraper
-        env:
-          ML_SESSION_COOKIES_JSON: ${{ secrets.ML_SESSION_COOKIES_JSON }}
         run: |
           if [ -n "${{ github.event.inputs.turno }}" ]; then
             python scraper/scrape_mercadolibre.py --turno "${{ github.event.inputs.turno }}"
