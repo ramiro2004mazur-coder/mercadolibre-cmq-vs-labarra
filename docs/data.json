@@ -1,0 +1,19 @@
+{
+  "pivot": [],
+  "dates": [],
+  "stats": [],
+  "fights": [
+    {
+      "name": "CMQ vs La Barra",
+      "seg": "Todas las marcas de cada tienda, agrupadas por presentacion",
+      "cmq": "CMQ",
+      "comp": "LA_BARRA"
+    }
+  ],
+  "meta": {
+    "generado": "2026-08-17T16:07:33+00:00",
+    "total_productos": 0,
+    "productos_por_tienda": {},
+    "corridas": 0
+  }
+}
