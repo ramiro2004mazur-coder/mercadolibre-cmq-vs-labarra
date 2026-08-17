@@ -24,7 +24,11 @@ concurrency:
 
 jobs:
   scrape-build-deploy:
-    runs-on: ubuntu-latest
+    # Corre en tu Mac (self-hosted), no en la nube: el listado completo de
+    # categoria requiere la MISMA IP/sesion con la que te logueaste, y desde
+    # un runner en la nube dispara un captcha. Ver README para el setup.
+    runs-on: self-hosted
+    timeout-minutes: 30
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -41,9 +45,13 @@ jobs:
         run: pip install -r scraper/requirements.txt
 
       - name: Instalar Chromium (Playwright)
-        run: playwright install --with-deps chromium
+        run: playwright install chromium
 
       - name: Correr scraper
+        env:
+          # Cookies de sesion en un archivo local de esta Mac, fuera del repo.
+          # Nunca se suben a GitHub. Ver README para como generarlo.
+          ML_COOKIES_FILE: /Users/ramiromazur/.config/ml-scraper/cookies.json
         run: |
           if [ -n "${{ github.event.inputs.turno }}" ]; then
             python scraper/scrape_mercadolibre.py --turno "${{ github.event.inputs.turno }}"

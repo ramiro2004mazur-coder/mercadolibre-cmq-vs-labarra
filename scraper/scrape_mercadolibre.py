@@ -1,23 +1,26 @@
 """
 Scraper de MercadoLibre para las tiendas oficiales CMQ y La Barra.
 
-No usa login ni cookies de sesion. Se probo que el listado completo de categoria
-("Cervezas") y las fichas de producto individuales estan detras de un muro de
-verificacion de cuenta, y que incluso con una sesion autenticada valida, acceder
-a ese listado desde un browser automatizado dispara un captcha de MercadoLibre
-("captcha/wall/logged"). No vamos a intentar resolver ni evadir eso.
+Dos fuentes, en orden de preferencia:
 
-En cambio, este scraper lee la home publica de cada tienda (sin login, sin
-captcha, confirmado en vivo), que muestra varios carruseles curados por el
-vendedor (Productos recomendados, Mas vendidos, Elegidos para vos, etc.) con
-precio de lista, % OFF, precio final y cuotas. No es garantia de cubrir el 100%
-del catalogo de cada tienda, pero es la unica via que no viola verificaciones
-ni requiere credenciales.
+1. Listado completo de categoria ("Cervezas"), que requiere una sesion
+   autenticada (cookies). Este script NUNCA envia usuario/contrasena ni
+   intenta resolver captchas/verificaciones: si el acceso esta bloqueado
+   (login, captcha), lo detecta, lo loguea, y pasa a la fuente 2.
+2. Home publica de la tienda (sin login), que muestra los carruseles que el
+   vendedor decide destacar (Productos recomendados, Mas vendidos, etc.).
+   Cobertura parcial, pero siempre disponible sin credenciales.
+
+Cookies: se leen de la variable de entorno ML_SESSION_COOKIES_JSON (JSON
+crudo), o del archivo indicado por ML_COOKIES_FILE, o de
+scraper/.cookies.local.json (gitignored) si existe. Si no hay cookies
+disponibles, se usa directamente la fuente 2 para ambas tiendas.
 """
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 from datetime import datetime
@@ -33,8 +36,10 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
 RAW_DIR = DATA_DIR / "raw"
 HISTORICO_PATH = DATA_DIR / "historico.json"
+LOCAL_COOKIES_PATH = Path(__file__).resolve().parent / ".cookies.local.json"
 
 TZ_AR = ZoneInfo("America/Argentina/Buenos_Aires")
+MAX_PAGINAS = 25
 
 ITEM_ID_RE = re.compile(r"item_id%3A(MLA\d+)|/(MLA\d+)-")
 
@@ -81,6 +86,74 @@ def log(msg: str) -> None:
     print(f"[{datetime.now(TZ_AR).isoformat(timespec='seconds')}] {msg}", file=sys.stderr)
 
 
+# ---------------------------------------------------------------------------
+# Cookies (opcionales)
+# ---------------------------------------------------------------------------
+
+_DOMAIN_RE = re.compile(r"[\w.-]+\.[a-zA-Z]{2,}")
+_SAMESITE_MAP = {
+    "no_restriction": "None",
+    "unspecified": "Lax",
+    "lax": "Lax",
+    "strict": "Strict",
+}
+
+
+def normalizar_cookie(c: dict) -> dict | None:
+    """Traduce un export tipo Cookie-Editor/DevTools al formato que espera Playwright."""
+    if not c.get("name") or "value" not in c:
+        return None
+
+    dominio_crudo = str(c.get("domain", ""))
+    match = _DOMAIN_RE.search(dominio_crudo)
+    if not match:
+        return None
+    host = match.group(0)
+    if not c.get("hostOnly", False) and not host.startswith("."):
+        host = "." + host
+
+    same_site_raw = str(c.get("sameSite", "")).lower()
+    same_site = _SAMESITE_MAP.get(same_site_raw, "Lax")
+
+    expira = c.get("expirationDate")
+    return {
+        "name": c["name"],
+        "value": c["value"],
+        "domain": host,
+        "path": c.get("path") or "/",
+        "httpOnly": bool(c.get("httpOnly", False)),
+        "secure": bool(c.get("secure", True)),
+        "sameSite": same_site,
+        "expires": float(expira) if expira else -1,
+    }
+
+
+def cargar_cookies() -> list[dict] | None:
+    raw = os.environ.get("ML_SESSION_COOKIES_JSON")
+    if not raw:
+        cookies_file = os.environ.get("ML_COOKIES_FILE")
+        path = Path(cookies_file).expanduser() if cookies_file else LOCAL_COOKIES_PATH
+        if path.exists():
+            raw = path.read_text(encoding="utf-8")
+    if not raw:
+        return None
+
+    crudas = json.loads(raw)
+    cookies = []
+    for c in crudas:
+        normalizada = normalizar_cookie(c)
+        if normalizada is None:
+            log(f"cookie descartada (formato irreconocible): {c.get('name', '<sin nombre>')}")
+            continue
+        cookies.append(normalizada)
+    return cookies or None
+
+
+# ---------------------------------------------------------------------------
+# Parseo de precios
+# ---------------------------------------------------------------------------
+
+
 def parse_money(texto: str | None) -> float | None:
     if not texto:
         return None
@@ -112,40 +185,8 @@ def hay_muro(page) -> bool:
     return "account-verification" in page.url or "captcha" in page.url or "/gz/" in page.url
 
 
-def scrapear_tienda(page, tienda_key: str, store: dict, errores: list[str]) -> list[dict]:
-    productos: list[dict] = []
-    log(f"[{tienda_key}] navegando a {store['home_url']}")
-    try:
-        page.goto(store["home_url"], wait_until="domcontentloaded", timeout=30000)
-    except PWTimeout:
-        errores.append(f"[{tienda_key}] timeout al cargar la home de la tienda")
-        return productos
-
-    if hay_muro(page):
-        errores.append(f"[{tienda_key}] la home publica devolvio un muro inesperado ({page.url})")
-        return productos
-
-    try:
-        page.wait_for_selector(".poly-card, li.ui-search-layout__item", timeout=15000)
-    except PWTimeout:
-        errores.append(f"[{tienda_key}] no se encontraron productos en la home (posible cambio de layout)")
-        return productos
-
-    # Los carruseles de abajo (mas vendidos, elegidos para vos) a veces cargan
-    # perezosamente al hacer scroll; forzamos un scroll completo antes de leer el DOM.
-    try:
-        alto_previo = -1
-        for _ in range(6):
-            alto = page.evaluate("document.body.scrollHeight")
-            if alto == alto_previo:
-                break
-            page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-            page.wait_for_timeout(400)
-            alto_previo = alto
-    except Exception:  # noqa: BLE001 - el scroll es best-effort, no crítico
-        pass
-
-    crudos = page.evaluate(EXTRACT_JS)
+def items_desde_cards(crudos: list[dict], tienda_key: str, errores: list[str]) -> list[dict]:
+    productos = []
     for item in crudos:
         try:
             titulo = item["titulo"]
@@ -184,9 +225,116 @@ def scrapear_tienda(page, tienda_key: str, store: dict, errores: list[str]) -> l
             )
         except Exception as exc:  # noqa: BLE001 - un item roto no debe tumbar la corrida
             errores.append(f"[{tienda_key}] error parseando item ({item.get('url')}): {exc}")
+    return productos
 
+
+# ---------------------------------------------------------------------------
+# Fuente 1: listado completo de categoria (requiere cookies)
+# ---------------------------------------------------------------------------
+
+
+def scrapear_listado(page, tienda_key: str, store: dict, errores: list[str]) -> list[dict] | None:
+    """Devuelve la lista de productos, o None si el listado esta bloqueado (para caer al fallback)."""
+    log(f"[{tienda_key}] (listado autenticado) navegando a {store['cervezas_url']}")
+    try:
+        page.goto(store["cervezas_url"], wait_until="domcontentloaded", timeout=30000)
+    except PWTimeout:
+        errores.append(f"[{tienda_key}] timeout al cargar el listado de categoria")
+        return None
+
+    if hay_muro(page):
+        errores.append(
+            f"[{tienda_key}] listado bloqueado ({page.url}) - cookies vencidas o captcha; uso home publica"
+        )
+        return None
+
+    productos: list[dict] = []
+    vistos_urls: set[str] = set()
+    for pagina in range(1, MAX_PAGINAS + 1):
+        try:
+            page.wait_for_selector(".poly-card, li.ui-search-layout__item", timeout=15000)
+        except PWTimeout:
+            if pagina == 1:
+                errores.append(f"[{tienda_key}] listado sin productos en la pagina 1 (posible cambio de layout)")
+                return None
+            break
+
+        crudos = page.evaluate(EXTRACT_JS)
+        nuevos = [c for c in crudos if c["url"] not in vistos_urls]
+        for c in nuevos:
+            vistos_urls.add(c["url"])
+        productos.extend(items_desde_cards(nuevos, tienda_key, errores))
+
+        log(f"[{tienda_key}] listado pagina {pagina}: {len(nuevos)} items nuevos, {len(productos)} cervezas acumuladas")
+        if not nuevos:
+            break
+
+        siguiente = page.query_selector(
+            "a.andes-pagination__link[title='Siguiente'], li.andes-pagination__button--next a"
+        )
+        if not siguiente:
+            break
+        try:
+            siguiente.click()
+            page.wait_for_load_state("domcontentloaded", timeout=15000)
+        except PWTimeout:
+            errores.append(f"[{tienda_key}] timeout al pasar de pagina en el listado, corto paginacion")
+            break
+
+        if hay_muro(page):
+            errores.append(f"[{tienda_key}] listado se bloqueo a mitad de la paginacion (pagina {pagina + 1})")
+            break
+
+    return productos
+
+
+# ---------------------------------------------------------------------------
+# Fuente 2: home publica de la tienda (fallback, sin login)
+# ---------------------------------------------------------------------------
+
+
+def scrapear_home(page, tienda_key: str, store: dict, errores: list[str]) -> list[dict]:
+    log(f"[{tienda_key}] (home publica) navegando a {store['home_url']}")
+    try:
+        page.goto(store["home_url"], wait_until="domcontentloaded", timeout=30000)
+    except PWTimeout:
+        errores.append(f"[{tienda_key}] timeout al cargar la home de la tienda")
+        return []
+
+    if hay_muro(page):
+        errores.append(f"[{tienda_key}] la home publica devolvio un muro inesperado ({page.url})")
+        return []
+
+    try:
+        page.wait_for_selector(".poly-card, li.ui-search-layout__item", timeout=15000)
+    except PWTimeout:
+        errores.append(f"[{tienda_key}] no se encontraron productos en la home (posible cambio de layout)")
+        return []
+
+    try:
+        alto_previo = -1
+        for _ in range(6):
+            alto = page.evaluate("document.body.scrollHeight")
+            if alto == alto_previo:
+                break
+            page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+            page.wait_for_timeout(400)
+            alto_previo = alto
+    except Exception:  # noqa: BLE001 - el scroll es best-effort, no critico
+        pass
+
+    crudos = page.evaluate(EXTRACT_JS)
+    productos = items_desde_cards(crudos, tienda_key, errores)
     log(f"[{tienda_key}] {len(productos)} cervezas encontradas en la home publica")
     return productos
+
+
+def scrapear_tienda(page, tienda_key: str, store: dict, hay_cookies: bool, errores: list[str]) -> list[dict]:
+    if hay_cookies:
+        productos = scrapear_listado(page, tienda_key, store, errores)
+        if productos is not None:
+            return productos
+    return scrapear_home(page, tienda_key, store, errores)
 
 
 def determinar_turno(turno_arg: str | None) -> str:
@@ -226,7 +374,6 @@ def consolidar_historico(historico: dict, run_label: str, productos_run: list[di
             historico["productos"].append(entrada)
             index[clave] = entrada
         else:
-            # Refrescamos metadata por si el titulo/atributos cambiaron.
             entrada.update(
                 {
                     "titulo": prod["titulo"],
@@ -262,6 +409,9 @@ def main() -> int:
     errores: list[str] = []
     todos_productos: list[dict] = []
 
+    cookies = cargar_cookies()
+    log(f"Cookies disponibles: {'si (' + str(len(cookies)) + ')' if cookies else 'no -> uso solo home publica'}")
+
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         context = browser.new_context(
@@ -270,11 +420,13 @@ def main() -> int:
             locale="es-AR",
             timezone_id="America/Argentina/Buenos_Aires",
         )
+        if cookies:
+            context.add_cookies(cookies)
         page = context.new_page()
 
         for tienda_key, store in STORES.items():
             try:
-                productos = scrapear_tienda(page, tienda_key, store, errores)
+                productos = scrapear_tienda(page, tienda_key, store, bool(cookies), errores)
                 todos_productos.extend(productos)
             except Exception as exc:  # noqa: BLE001 - una tienda rota no debe tumbar la otra
                 errores.append(f"[{tienda_key}] fallo inesperado: {exc}")
