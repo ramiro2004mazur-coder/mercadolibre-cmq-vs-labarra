@@ -36,16 +36,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
       - name: Instalar dependencias
-        run: pip install -r scraper/requirements.txt
+        # Usamos el Python del sistema en vez de actions/setup-python: esa
+        # action asume la carpeta home de un runner GitHub-hosted (/Users/runner)
+        # y falla por permisos en un self-hosted corriendo como otro usuario.
+        run: python3 -m pip install --user -r scraper/requirements.txt
 
       - name: Instalar Chromium (Playwright)
-        run: playwright install chromium
+        run: python3 -m playwright install chromium
 
       - name: Correr scraper
         env:
@@ -54,13 +52,13 @@ jobs:
           ML_COOKIES_FILE: /Users/ramiromazur/.config/ml-scraper/cookies.json
         run: |
           if [ -n "${{ github.event.inputs.turno }}" ]; then
-            python scraper/scrape_mercadolibre.py --turno "${{ github.event.inputs.turno }}"
+            python3 scraper/scrape_mercadolibre.py --turno "${{ github.event.inputs.turno }}"
           else
-            python scraper/scrape_mercadolibre.py
+            python3 scraper/scrape_mercadolibre.py
           fi
 
       - name: Reconstruir data.json del dashboard
-        run: python scripts/build_dashboard_data.py
+        run: python3 scripts/build_dashboard_data.py
 
       - name: Commit y push del historico actualizado
         run: |
