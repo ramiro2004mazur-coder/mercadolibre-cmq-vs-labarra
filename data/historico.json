@@ -1,7 +1,8 @@
 {
   "runs": [
     "2026-08-17 AM",
-    "2026-08-17 PM"
+    "2026-08-17 PM",
+    "2026-08-18 AM"
   ],
   "productos": [
     {
@@ -25,6 +26,12 @@
           "ptc": 15123.0,
           "dinamica": 0.15,
           "cuotas": null
+        },
+        "2026-08-18 AM": {
+          "fleje": 17874.0,
+          "ptc": 13405.0,
+          "dinamica": 0.25,
+          "cuotas": null
         }
       }
     },
@@ -45,6 +52,12 @@
           "cuotas": null
         },
         "2026-08-17 PM": {
+          "fleje": 20010.0,
+          "ptc": 11781.0,
+          "dinamica": 0.41,
+          "cuotas": null
+        },
+        "2026-08-18 AM": {
           "fleje": 20010.0,
           "ptc": 11781.0,
           "dinamica": 0.41,
@@ -73,6 +86,12 @@
           "ptc": 82000.0,
           "dinamica": 0.24,
           "cuotas": 18448.0
+        },
+        "2026-08-18 AM": {
+          "fleje": 109200.0,
+          "ptc": 81900.0,
+          "dinamica": 0.25,
+          "cuotas": 13055.0
         }
       }
     },
@@ -97,6 +116,12 @@
           "ptc": 69638.0,
           "dinamica": 0.27,
           "cuotas": 15667.0
+        },
+        "2026-08-18 AM": {
+          "fleje": 96624.0,
+          "ptc": 69638.0,
+          "dinamica": 0.27,
+          "cuotas": 11101.0
         }
       }
     },
@@ -145,6 +170,12 @@
           "ptc": 75906.0,
           "dinamica": 0.25,
           "cuotas": 17077.0
+        },
+        "2026-08-18 AM": {
+          "fleje": 101208.0,
+          "ptc": 75906.0,
+          "dinamica": 0.25,
+          "cuotas": 12100.0
         }
       }
     },
@@ -169,6 +200,12 @@
           "ptc": 56466.0,
           "dinamica": 0.25,
           "cuotas": 12703.0
+        },
+        "2026-08-18 AM": {
+          "fleje": 75288.0,
+          "ptc": 56466.0,
+          "dinamica": 0.25,
+          "cuotas": 9001.0
         }
       }
     },
@@ -189,6 +226,12 @@
           "cuotas": null
         },
         "2026-08-17 PM": {
+          "fleje": 49464.0,
+          "ptc": 37098.0,
+          "dinamica": 0.25,
+          "cuotas": null
+        },
+        "2026-08-18 AM": {
           "fleje": 49464.0,
           "ptc": 37098.0,
           "dinamica": 0.25,
@@ -217,6 +260,12 @@
           "ptc": 84402.0,
           "dinamica": 0.25,
           "cuotas": 18989.0
+        },
+        "2026-08-18 AM": {
+          "fleje": 112536.0,
+          "ptc": 84402.0,
+          "dinamica": 0.25,
+          "cuotas": 13454.0
         }
       }
     },
@@ -237,6 +286,12 @@
           "cuotas": 12073.0
         },
         "2026-08-17 PM": {
+          "fleje": 67080.0,
+          "ptc": 53664.0,
+          "dinamica": 0.2,
+          "cuotas": 12073.0
+        },
+        "2026-08-18 AM": {
           "fleje": 67080.0,
           "ptc": 53664.0,
           "dinamica": 0.2,
@@ -265,6 +320,12 @@
           "ptc": 53388.0,
           "dinamica": 0.25,
           "cuotas": 12011.0
+        },
+        "2026-08-18 AM": {
+          "fleje": 71184.0,
+          "ptc": 53388.0,
+          "dinamica": 0.25,
+          "cuotas": 8510.0
         }
       }
     },
@@ -289,6 +350,12 @@
           "ptc": 50310.0,
           "dinamica": 0.25,
           "cuotas": 11318.0
+        },
+        "2026-08-18 AM": {
+          "fleje": 67080.0,
+          "ptc": 50310.0,
+          "dinamica": 0.25,
+          "cuotas": 8019.0
         }
       }
     },
@@ -313,6 +380,12 @@
           "ptc": 53388.0,
           "dinamica": 0.25,
           "cuotas": 12011.0
+        },
+        "2026-08-18 AM": {
+          "fleje": 71184.0,
+          "ptc": 53388.0,
+          "dinamica": 0.25,
+          "cuotas": 8510.0
         }
       }
     },
@@ -337,6 +410,12 @@
           "ptc": 53388.0,
           "dinamica": 0.25,
           "cuotas": 12011.0
+        },
+        "2026-08-18 AM": {
+          "fleje": 71184.0,
+          "ptc": 53388.0,
+          "dinamica": 0.25,
+          "cuotas": 8510.0
         }
       }
     },
@@ -361,6 +440,12 @@
           "ptc": 69638.0,
           "dinamica": 0.2,
           "cuotas": 15667.0
+        },
+        "2026-08-18 AM": {
+          "fleje": 87048.0,
+          "ptc": 69638.0,
+          "dinamica": 0.2,
+          "cuotas": 11101.0
         }
       }
     },
@@ -381,6 +466,12 @@
           "cuotas": null
         },
         "2026-08-17 PM": {
+          "fleje": 58872.0,
+          "ptc": 34474.0,
+          "dinamica": 0.41,
+          "cuotas": null
+        },
+        "2026-08-18 AM": {
           "fleje": 58872.0,
           "ptc": 34474.0,
           "dinamica": 0.41,
@@ -409,6 +500,12 @@
           "ptc": 67968.0,
           "dinamica": 0.25,
           "cuotas": 15291.0
+        },
+        "2026-08-18 AM": {
+          "fleje": 90624.0,
+          "ptc": 67968.0,
+          "dinamica": 0.25,
+          "cuotas": 10834.0
         }
       }
     },
@@ -429,6 +526,12 @@
           "cuotas": null
         },
         "2026-08-17 PM": {
+          "fleje": 56496.0,
+          "ptc": 42372.0,
+          "dinamica": 0.25,
+          "cuotas": null
+        },
+        "2026-08-18 AM": {
           "fleje": 56496.0,
           "ptc": 42372.0,
           "dinamica": 0.25,
@@ -457,6 +560,12 @@
           "ptc": 45172.0,
           "dinamica": 0.4,
           "cuotas": 10163.0
+        },
+        "2026-08-18 AM": {
+          "fleje": 75288.0,
+          "ptc": 46932.0,
+          "dinamica": 0.37,
+          "cuotas": 7481.0
         }
       }
     },
@@ -477,6 +586,12 @@
           "cuotas": null
         },
         "2026-08-17 PM": {
+          "fleje": 56496.0,
+          "ptc": 42372.0,
+          "dinamica": 0.25,
+          "cuotas": null
+        },
+        "2026-08-18 AM": {
           "fleje": 56496.0,
           "ptc": 42372.0,
           "dinamica": 0.25,
@@ -505,6 +620,12 @@
           "ptc": 51963.0,
           "dinamica": 0.36,
           "cuotas": 11690.0
+        },
+        "2026-08-18 AM": {
+          "fleje": 82416.0,
+          "ptc": 51963.0,
+          "dinamica": 0.36,
+          "cuotas": 8283.0
         }
       }
     },
@@ -529,6 +650,24 @@
           "ptc": 56466.0,
           "dinamica": 0.25,
           "cuotas": 12703.0
+        }
+      }
+    },
+    {
+      "tienda": "CMQ",
+      "sku": "MLA1755875542",
+      "titulo": "Cerveza Quilmes Sin Alcohol 473cc Pack x6 Unidades",
+      "url": "https://www.mercadolibre.com.ar/cerveza-quilmes-sin-alcohol-473cc-pack-x6-unidades/p/MLA17360719?pdp_filters=item_id%3AMLA1755875542",
+      "marca": "Quilmes",
+      "grupo": "Quilmes",
+      "calibre": "473cc x6",
+      "segmento": "Sin Alcohol",
+      "runs": {
+        "2026-08-18 AM": {
+          "fleje": 12900.0,
+          "ptc": 9030.0,
+          "dinamica": 0.3,
+          "cuotas": null
         }
       }
     }
