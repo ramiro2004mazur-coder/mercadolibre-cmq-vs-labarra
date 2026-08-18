@@ -15,8 +15,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: scrape-mercadolibre
@@ -24,14 +22,12 @@ concurrency:
 
 jobs:
   scrape-build-deploy:
-    # Corre en tu Mac (self-hosted), no en la nube: el listado completo de
-    # categoria requiere la MISMA IP/sesion con la que te logueaste, y desde
-    # un runner en la nube dispara un captcha. Ver README para el setup.
+    # Corre en tu Mac (self-hosted), no en la nube: probamos que el listado
+    # completo de categoria dispara un captcha de MercadoLibre incluso desde
+    # aca, asi que en la practica siempre cae al fallback de home publica.
+    # Ver README.
     runs-on: self-hosted
     timeout-minutes: 30
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -71,12 +67,6 @@ jobs:
             git commit -m "chore: actualizar historico de precios ($(date -u +'%Y-%m-%d %H:%M UTC'))"
             git push
           fi
-
-      - name: Preparar artifact de Pages
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs
-
-      - name: Deploy a GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      # GitHub Pages esta configurado para servir directo desde main/docs,
+      # asi que el push de arriba ya publica el dashboard. No hace falta
+      # un paso de deploy separado.

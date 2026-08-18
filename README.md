@@ -11,8 +11,10 @@ Dos corridas por día (10:15 y 19:00 hora Argentina), histórico consolidado AM/
 
 El scraper intenta dos fuentes, en este orden:
 
-1. **Listado completo de categoría "Cervezas"** de cada tienda — el catálogo real. Requiere una sesión autenticada (cookies). Probamos que acceder a esto desde una IP de datacenter (GitHub-hosted runner) dispara un captcha de MercadoLibre incluso con sesión válida, así que **este workflow corre en un runner self-hosted instalado en tu Mac**: al usar la misma IP/máquina con la que te logueaste, es mucho menos probable (no garantizado) que MercadoLibre lo bloquee.
-2. **Home pública de la tienda** (sin login) — fallback automático si el listado está bloqueado (cookies vencidas, captcha, lo que sea). Cubre solo lo que cada vendedor destaca en su home (5-20+ SKUs según la tienda), pero siempre funciona sin credenciales.
+1. **Listado completo de categoría "Cervezas"** de cada tienda — el catálogo real. Requiere una sesión autenticada (cookies).
+2. **Home pública de la tienda** (sin login) — fallback automático si el listado está bloqueado. Cubre solo lo que cada vendedor destaca en su home (5-20+ SKUs según la tienda), pero siempre funciona sin credenciales.
+
+**Estado real, probado:** la fuente 1 dispara un captcha de MercadoLibre (`captcha/wall/logged`) incluso con cookies válidas — y lo comprobamos tanto desde un runner en la nube como desde este runner self-hosted corriendo en la Mac real donde se generó la sesión. O sea, no es un tema de IP/datacenter: MercadoLibre bloquea cualquier browser automatizado en ese endpoint, autenticado o no. No vamos a intentar evadir eso (sería construir una herramienta de bypass de detección de bots, algo que no voy a hacer). En la práctica, **todas las corridas caen al fallback de home pública** (fuente 2) — el self-hosted runner quedó igual instalado y anda bien para el fallback, pero no logró destrabar el catálogo completo.
 
 El scraper nunca automatiza login ni resuelve captchas/verificaciones — si el listado está bloqueado, lo detecta, lo loguea, y cae al fallback público sin romper la corrida.
 
@@ -47,7 +49,11 @@ Se guardan **solo en tu Mac**, nunca en GitHub ni en ningún chat:
 
 Si ese archivo no existe o las cookies vencieron, el scraper cae automáticamente al fallback público — no rompe nada, simplemente trae menos productos ese día. Repetí este proceso cada vez que quieras refrescar la sesión (cada 2-3 semanas es razonable).
 
-**Recordatorio del riesgo:** usar una cuenta real para esto sigue yendo contra los Términos de Servicio de MercadoLibre. Correrlo desde tu propia Mac reduce el riesgo de que el captcha se dispare, pero no lo elimina ni te exime de esa violación de ToS — es una decisión tuya, no mía.
+**Recordatorio del riesgo:** usar una cuenta real para esto sigue yendo contra los Términos de Servicio de MercadoLibre, y en la práctica el listado completo sigue bloqueado por captcha aunque corra desde tu propia Mac (ver arriba) — es una decisión tuya seguir intentándolo, no mía.
+
+## GitHub Pages
+
+Configurado en modo "Deploy from a branch" (`main` / `/docs`), no con el flujo de Actions artifact — eso evita depender de `gtar` (GNU tar), que no viene instalado por default en macOS y rompía el deploy en el runner self-hosted. El push del workflow a `docs/data.json` ya dispara la publicación sola.
 
 ## Estructura
 
