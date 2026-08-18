@@ -311,7 +311,7 @@
     }
   ],
   "errores": [
-    "[CMQ] listado bloqueado (https://www.mercadolibre.com.ar/captcha/wall/logged?go_url=https%3A%2F%2Flistado.mercadolibre.com.ar%2Ftienda%2Fcerveceria-y-malteria-quilmes%2Flistado%2Falimentos-bebidas%2Fbebidas%2Fcervezas%2F&tid=b626663f-136f-4f19-abc5-12d276ba1fe9) - cookies vencidas o captcha; uso home publica",
-    "[LA_BARRA] listado bloqueado (https://www.mercadolibre.com.ar/captcha/wall/logged?go_url=https%3A%2F%2Flistado.mercadolibre.com.ar%2Ftienda%2Fla-barra%2Flistado%2Falimentos-bebidas%2Fbebidas%2Fcervezas%2F&tid=081a0658-0530-4732-acbe-efbcadbf87fa) - cookies vencidas o captcha; uso home publica"
+    "[CMQ] listado bloqueado (https://www.mercadolibre.com.ar/captcha/wall/logged?go_url=https%3A%2F%2Flistado.mercadolibre.com.ar%2Ftienda%2Fcerveceria-y-malteria-quilmes%2Flistado%2Falimentos-bebidas%2Fbebidas%2Fcervezas%2F&tid=1b3c059b-c598-4a00-96f9-410a5c4a2224) - cookies vencidas o captcha; uso home publica",
+    "[LA_BARRA] listado bloqueado (https://www.mercadolibre.com.ar/captcha/wall/logged?go_url=https%3A%2F%2Flistado.mercadolibre.com.ar%2Ftienda%2Fla-barra%2Flistado%2Falimentos-bebidas%2Fbebidas%2Fcervezas%2F&tid=ddf94a3f-1154-44bb-bf75-8b6d91b3e4bb) - cookies vencidas o captcha; uso home publica"
   ]
 }
