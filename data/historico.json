@@ -7,7 +7,8 @@
     "2026-08-19 AM",
     "2026-08-19 PM",
     "2026-08-20 AM",
-    "2026-08-20 PM"
+    "2026-08-20 PM",
+    "2026-08-21 AM"
   ],
   "productos": [
     {
@@ -63,6 +64,12 @@
           "cuotas": null
         },
         "2026-08-20 PM": {
+          "fleje": 17874.0,
+          "ptc": 13405.0,
+          "dinamica": 0.25,
+          "cuotas": null
+        },
+        "2026-08-21 AM": {
           "fleje": 17874.0,
           "ptc": 13405.0,
           "dinamica": 0.25,
@@ -127,6 +134,12 @@
           "ptc": 11781.0,
           "dinamica": 0.41,
           "cuotas": null
+        },
+        "2026-08-21 AM": {
+          "fleje": 20010.0,
+          "ptc": 11781.0,
+          "dinamica": 0.41,
+          "cuotas": null
         }
       }
     },
@@ -187,6 +200,12 @@
           "ptc": 81900.0,
           "dinamica": 0.25,
           "cuotas": 18426.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 109200.0,
+          "ptc": 81900.0,
+          "dinamica": 0.25,
+          "cuotas": 13055.0
         }
       }
     },
@@ -307,6 +326,12 @@
           "ptc": 75906.0,
           "dinamica": 0.25,
           "cuotas": 17077.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 101208.0,
+          "ptc": 75906.0,
+          "dinamica": 0.25,
+          "cuotas": 12100.0
         }
       }
     },
@@ -367,6 +392,12 @@
           "ptc": 56466.0,
           "dinamica": 0.25,
           "cuotas": 12703.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 75288.0,
+          "ptc": 56466.0,
+          "dinamica": 0.25,
+          "cuotas": 9001.0
         }
       }
     },
@@ -463,6 +494,12 @@
           "ptc": 84402.0,
           "dinamica": 0.25,
           "cuotas": 13454.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 112536.0,
+          "ptc": 84402.0,
+          "dinamica": 0.25,
+          "cuotas": 13454.0
         }
       }
     },
@@ -519,6 +556,12 @@
           "cuotas": 12073.0
         },
         "2026-08-20 PM": {
+          "fleje": 67080.0,
+          "ptc": 53664.0,
+          "dinamica": 0.2,
+          "cuotas": 12073.0
+        },
+        "2026-08-21 AM": {
           "fleje": 67080.0,
           "ptc": 53664.0,
           "dinamica": 0.2,
@@ -583,6 +626,12 @@
           "ptc": 53388.0,
           "dinamica": 0.25,
           "cuotas": 12011.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 71184.0,
+          "ptc": 53388.0,
+          "dinamica": 0.25,
+          "cuotas": 8510.0
         }
       }
     },
@@ -643,6 +692,12 @@
           "ptc": 50310.0,
           "dinamica": 0.25,
           "cuotas": 11318.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 67080.0,
+          "ptc": 50310.0,
+          "dinamica": 0.25,
+          "cuotas": 8019.0
         }
       }
     },
@@ -703,6 +758,12 @@
           "ptc": 53388.0,
           "dinamica": 0.25,
           "cuotas": 12011.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 71184.0,
+          "ptc": 53388.0,
+          "dinamica": 0.25,
+          "cuotas": 8510.0
         }
       }
     },
@@ -763,6 +824,12 @@
           "ptc": 53388.0,
           "dinamica": 0.25,
           "cuotas": 12011.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 71184.0,
+          "ptc": 53388.0,
+          "dinamica": 0.25,
+          "cuotas": 8510.0
         }
       }
     },
@@ -823,6 +890,12 @@
           "ptc": 69638.0,
           "dinamica": 0.2,
           "cuotas": 15667.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 87048.0,
+          "ptc": 69638.0,
+          "dinamica": 0.2,
+          "cuotas": 11101.0
         }
       }
     },
@@ -925,6 +998,12 @@
           "ptc": 67968.0,
           "dinamica": 0.25,
           "cuotas": 15291.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 90624.0,
+          "ptc": 67968.0,
+          "dinamica": 0.25,
+          "cuotas": 10834.0
         }
       }
     },
@@ -981,6 +1060,12 @@
           "cuotas": null
         },
         "2026-08-20 PM": {
+          "fleje": 56496.0,
+          "ptc": 42372.0,
+          "dinamica": 0.25,
+          "cuotas": null
+        },
+        "2026-08-21 AM": {
           "fleje": 56496.0,
           "ptc": 42372.0,
           "dinamica": 0.25,
@@ -1045,6 +1130,12 @@
           "ptc": 46932.0,
           "dinamica": 0.37,
           "cuotas": 10559.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 75288.0,
+          "ptc": 46932.0,
+          "dinamica": 0.37,
+          "cuotas": 7481.0
         }
       }
     },
@@ -1095,6 +1186,12 @@
           "cuotas": null
         },
         "2026-08-20 PM": {
+          "fleje": 56496.0,
+          "ptc": 42372.0,
+          "dinamica": 0.25,
+          "cuotas": null
+        },
+        "2026-08-21 AM": {
           "fleje": 56496.0,
           "ptc": 42372.0,
           "dinamica": 0.25,
@@ -1159,6 +1256,12 @@
           "ptc": 51963.0,
           "dinamica": 0.36,
           "cuotas": 11690.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 82416.0,
+          "ptc": 51963.0,
+          "dinamica": 0.36,
+          "cuotas": 8283.0
         }
       }
     },
@@ -1183,6 +1286,12 @@
           "ptc": 56466.0,
           "dinamica": 0.25,
           "cuotas": 12703.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 75288.0,
+          "ptc": 56466.0,
+          "dinamica": 0.25,
+          "cuotas": 9001.0
         }
       }
     },
@@ -1231,6 +1340,12 @@
           "ptc": 9030.0,
           "dinamica": 0.3,
           "cuotas": null
+        },
+        "2026-08-21 AM": {
+          "fleje": 12900.0,
+          "ptc": 7740.0,
+          "dinamica": 0.4,
+          "cuotas": null
         }
       }
     },
@@ -1266,6 +1381,12 @@
           "fleje": 15528.0,
           "ptc": 11105.0,
           "dinamica": 0.28,
+          "cuotas": null
+        },
+        "2026-08-21 AM": {
+          "fleje": 15528.0,
+          "ptc": 12422.0,
+          "dinamica": 0.2,
           "cuotas": null
         }
       }
@@ -1471,6 +1592,12 @@
           "ptc": 77702.0,
           "dinamica": 0.4,
           "cuotas": 17481.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 129504.0,
+          "ptc": 77702.0,
+          "dinamica": 0.4,
+          "cuotas": 12386.0
         }
       }
     },
@@ -1488,6 +1615,24 @@
           "fleje": 73008.0,
           "ptc": 40500.0,
           "dinamica": 0.44,
+          "cuotas": null
+        }
+      }
+    },
+    {
+      "tienda": "CMQ",
+      "sku": "MLA1633039445",
+      "titulo": "Pack X6 Cervezas Sin Alcohol 473ml C/u Corona",
+      "url": "https://www.mercadolibre.com.ar/pack-x6-cervezas-sin-alcohol-473ml-cu-corona/p/MLA63468538?pdp_filters=item_id%3AMLA1633039445",
+      "marca": "Corona",
+      "grupo": "Corona",
+      "calibre": "473ml x6",
+      "segmento": "Sin Alcohol",
+      "runs": {
+        "2026-08-21 AM": {
+          "fleje": 21600.0,
+          "ptc": 12960.0,
+          "dinamica": 0.4,
           "cuotas": null
         }
       }

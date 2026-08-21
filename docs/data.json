@@ -58,6 +58,12 @@
           "ptc": 13405.0,
           "dinamica": 0.25,
           "cuotas": null
+        },
+        "2026-08-21 AM": {
+          "fleje": 17874.0,
+          "ptc": 13405.0,
+          "dinamica": 0.25,
+          "cuotas": null
         }
       }
     },
@@ -115,6 +121,12 @@
           "cuotas": null
         },
         "2026-08-20 PM": {
+          "fleje": 20010.0,
+          "ptc": 11781.0,
+          "dinamica": 0.41,
+          "cuotas": null
+        },
+        "2026-08-21 AM": {
           "fleje": 20010.0,
           "ptc": 11781.0,
           "dinamica": 0.41,
@@ -180,6 +192,12 @@
           "ptc": 81900.0,
           "dinamica": 0.25,
           "cuotas": 18426.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 109200.0,
+          "ptc": 81900.0,
+          "dinamica": 0.25,
+          "cuotas": 13055.0
         }
       }
     },
@@ -303,6 +321,12 @@
           "ptc": 75906.0,
           "dinamica": 0.25,
           "cuotas": 17077.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 101208.0,
+          "ptc": 75906.0,
+          "dinamica": 0.25,
+          "cuotas": 12100.0
         }
       }
     },
@@ -364,6 +388,12 @@
           "ptc": 56466.0,
           "dinamica": 0.25,
           "cuotas": 12703.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 75288.0,
+          "ptc": 56466.0,
+          "dinamica": 0.25,
+          "cuotas": 9001.0
         }
       }
     },
@@ -462,6 +492,12 @@
           "ptc": 84402.0,
           "dinamica": 0.25,
           "cuotas": 13454.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 112536.0,
+          "ptc": 84402.0,
+          "dinamica": 0.25,
+          "cuotas": 13454.0
         }
       }
     },
@@ -519,6 +555,12 @@
           "cuotas": 12073.0
         },
         "2026-08-20 PM": {
+          "fleje": 67080.0,
+          "ptc": 53664.0,
+          "dinamica": 0.2,
+          "cuotas": 12073.0
+        },
+        "2026-08-21 AM": {
           "fleje": 67080.0,
           "ptc": 53664.0,
           "dinamica": 0.2,
@@ -584,6 +626,12 @@
           "ptc": 53388.0,
           "dinamica": 0.25,
           "cuotas": 12011.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 71184.0,
+          "ptc": 53388.0,
+          "dinamica": 0.25,
+          "cuotas": 8510.0
         }
       }
     },
@@ -645,6 +693,12 @@
           "ptc": 50310.0,
           "dinamica": 0.25,
           "cuotas": 11318.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 67080.0,
+          "ptc": 50310.0,
+          "dinamica": 0.25,
+          "cuotas": 8019.0
         }
       }
     },
@@ -706,6 +760,12 @@
           "ptc": 53388.0,
           "dinamica": 0.25,
           "cuotas": 12011.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 71184.0,
+          "ptc": 53388.0,
+          "dinamica": 0.25,
+          "cuotas": 8510.0
         }
       }
     },
@@ -767,6 +827,12 @@
           "ptc": 53388.0,
           "dinamica": 0.25,
           "cuotas": 12011.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 71184.0,
+          "ptc": 53388.0,
+          "dinamica": 0.25,
+          "cuotas": 8510.0
         }
       }
     },
@@ -828,6 +894,12 @@
           "ptc": 69638.0,
           "dinamica": 0.2,
           "cuotas": 15667.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 87048.0,
+          "ptc": 69638.0,
+          "dinamica": 0.2,
+          "cuotas": 11101.0
         }
       }
     },
@@ -932,6 +1004,12 @@
           "ptc": 67968.0,
           "dinamica": 0.25,
           "cuotas": 15291.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 90624.0,
+          "ptc": 67968.0,
+          "dinamica": 0.25,
+          "cuotas": 10834.0
         }
       }
     },
@@ -989,6 +1067,12 @@
           "cuotas": null
         },
         "2026-08-20 PM": {
+          "fleje": 56496.0,
+          "ptc": 42372.0,
+          "dinamica": 0.25,
+          "cuotas": null
+        },
+        "2026-08-21 AM": {
           "fleje": 56496.0,
           "ptc": 42372.0,
           "dinamica": 0.25,
@@ -1054,6 +1138,12 @@
           "ptc": 46932.0,
           "dinamica": 0.37,
           "cuotas": 10559.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 75288.0,
+          "ptc": 46932.0,
+          "dinamica": 0.37,
+          "cuotas": 7481.0
         }
       }
     },
@@ -1105,6 +1195,12 @@
           "cuotas": null
         },
         "2026-08-20 PM": {
+          "fleje": 56496.0,
+          "ptc": 42372.0,
+          "dinamica": 0.25,
+          "cuotas": null
+        },
+        "2026-08-21 AM": {
           "fleje": 56496.0,
           "ptc": 42372.0,
           "dinamica": 0.25,
@@ -1170,6 +1266,12 @@
           "ptc": 51963.0,
           "dinamica": 0.36,
           "cuotas": 11690.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 82416.0,
+          "ptc": 51963.0,
+          "dinamica": 0.36,
+          "cuotas": 8283.0
         }
       }
     },
@@ -1195,6 +1297,12 @@
           "ptc": 56466.0,
           "dinamica": 0.25,
           "cuotas": 12703.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 75288.0,
+          "ptc": 56466.0,
+          "dinamica": 0.25,
+          "cuotas": 9001.0
         }
       }
     },
@@ -1244,6 +1352,12 @@
           "ptc": 9030.0,
           "dinamica": 0.3,
           "cuotas": null
+        },
+        "2026-08-21 AM": {
+          "fleje": 12900.0,
+          "ptc": 7740.0,
+          "dinamica": 0.4,
+          "cuotas": null
         }
       }
     },
@@ -1280,6 +1394,12 @@
           "fleje": 15528.0,
           "ptc": 11105.0,
           "dinamica": 0.28,
+          "cuotas": null
+        },
+        "2026-08-21 AM": {
+          "fleje": 15528.0,
+          "ptc": 12422.0,
+          "dinamica": 0.2,
           "cuotas": null
         }
       }
@@ -1493,6 +1613,12 @@
           "ptc": 77702.0,
           "dinamica": 0.4,
           "cuotas": 17481.0
+        },
+        "2026-08-21 AM": {
+          "fleje": 129504.0,
+          "ptc": 77702.0,
+          "dinamica": 0.4,
+          "cuotas": 12386.0
         }
       }
     },
@@ -1514,6 +1640,25 @@
           "cuotas": null
         }
       }
+    },
+    {
+      "tienda": "CMQ",
+      "tienda_label": "CMQ",
+      "sku": "MLA1633039445",
+      "titulo": "Pack X6 Cervezas Sin Alcohol 473ml C/u Corona",
+      "url": "https://www.mercadolibre.com.ar/pack-x6-cervezas-sin-alcohol-473ml-cu-corona/p/MLA63468538?pdp_filters=item_id%3AMLA1633039445",
+      "marca": "Corona",
+      "grupo": "Corona",
+      "calibre": "473ml x6",
+      "segmento": "Sin Alcohol",
+      "dates": {
+        "2026-08-21 AM": {
+          "fleje": 21600.0,
+          "ptc": 12960.0,
+          "dinamica": 0.4,
+          "cuotas": null
+        }
+      }
     }
   ],
   "dates": [
@@ -1524,7 +1669,8 @@
     "2026-08-19 AM",
     "2026-08-19 PM",
     "2026-08-20 AM",
-    "2026-08-20 PM"
+    "2026-08-20 PM",
+    "2026-08-21 AM"
   ],
   "stats": [
     {
@@ -1533,11 +1679,11 @@
       "grupo": "Michelob",
       "segmento": "Cerveza",
       "calibre": "473cc x6",
-      "dias": 8,
-      "dias_dinamica": 8,
+      "dias": 9,
+      "dias_dinamica": 9,
       "max_dinamica": 0.35,
       "avg_dinamica": 0.25,
-      "avg_ptc": 13387.75
+      "avg_ptc": 13389.666666666666
     },
     {
       "tienda": "CMQ",
@@ -1545,11 +1691,11 @@
       "grupo": "Andes Origen",
       "segmento": "IPA",
       "calibre": "473ml x6",
-      "dias": 8,
-      "dias_dinamica": 8,
+      "dias": 9,
+      "dias_dinamica": 9,
       "max_dinamica": 0.42,
-      "avg_dinamica": 0.4125,
-      "avg_ptc": 11692.75
+      "avg_dinamica": 0.4122222222222222,
+      "avg_ptc": 11702.555555555555
     },
     {
       "tienda": "CMQ",
@@ -1557,11 +1703,11 @@
       "grupo": "Corona",
       "segmento": "Cerveza",
       "calibre": "330cc x24",
-      "dias": 8,
-      "dias_dinamica": 8,
+      "dias": 9,
+      "dias_dinamica": 9,
       "max_dinamica": 0.25,
-      "avg_dinamica": 0.2475,
-      "avg_ptc": 81925.0
+      "avg_dinamica": 0.24777777777777776,
+      "avg_ptc": 81922.22222222222
     },
     {
       "tienda": "CMQ",
@@ -1593,8 +1739,8 @@
       "grupo": "Blue Moon",
       "segmento": "Cerveza",
       "calibre": "473ml x24 Lata",
-      "dias": 8,
-      "dias_dinamica": 8,
+      "dias": 9,
+      "dias_dinamica": 9,
       "max_dinamica": 0.25,
       "avg_dinamica": 0.25,
       "avg_ptc": 75906.0
@@ -1605,8 +1751,8 @@
       "grupo": "Imperial",
       "segmento": "Golden",
       "calibre": "330ml x24 Porrón",
-      "dias": 8,
-      "dias_dinamica": 8,
+      "dias": 9,
+      "dias_dinamica": 9,
       "max_dinamica": 0.25,
       "avg_dinamica": 0.25,
       "avg_ptc": 56466.0
@@ -1629,8 +1775,8 @@
       "grupo": "Blue Moon",
       "segmento": "Cerveza",
       "calibre": "355ml x24 Porrón",
-      "dias": 8,
-      "dias_dinamica": 8,
+      "dias": 9,
+      "dias_dinamica": 9,
       "max_dinamica": 0.25,
       "avg_dinamica": 0.25,
       "avg_ptc": 84402.0
@@ -1641,8 +1787,8 @@
       "grupo": "Imperial",
       "segmento": "Lager",
       "calibre": "473ml x24",
-      "dias": 8,
-      "dias_dinamica": 8,
+      "dias": 9,
+      "dias_dinamica": 9,
       "max_dinamica": 0.2,
       "avg_dinamica": 0.2,
       "avg_ptc": 53664.0
@@ -1653,8 +1799,8 @@
       "grupo": "Imperial",
       "segmento": "IPA",
       "calibre": "473ml x24",
-      "dias": 8,
-      "dias_dinamica": 8,
+      "dias": 9,
+      "dias_dinamica": 9,
       "max_dinamica": 0.25,
       "avg_dinamica": 0.25,
       "avg_ptc": 53388.0
@@ -1665,8 +1811,8 @@
       "grupo": "Imperial",
       "segmento": "Golden",
       "calibre": "473ml x24 Lata",
-      "dias": 8,
-      "dias_dinamica": 8,
+      "dias": 9,
+      "dias_dinamica": 9,
       "max_dinamica": 0.25,
       "avg_dinamica": 0.25,
       "avg_ptc": 50310.0
@@ -1677,8 +1823,8 @@
       "grupo": "Imperial",
       "segmento": "Stout",
       "calibre": "473ml x24 Lata",
-      "dias": 8,
-      "dias_dinamica": 8,
+      "dias": 9,
+      "dias_dinamica": 9,
       "max_dinamica": 0.25,
       "avg_dinamica": 0.25,
       "avg_ptc": 53388.0
@@ -1689,8 +1835,8 @@
       "grupo": "Imperial",
       "segmento": "Roja",
       "calibre": "473ml x24 Lata",
-      "dias": 8,
-      "dias_dinamica": 8,
+      "dias": 9,
+      "dias_dinamica": 9,
       "max_dinamica": 0.25,
       "avg_dinamica": 0.25,
       "avg_ptc": 53388.0
@@ -1701,8 +1847,8 @@
       "grupo": "Heineken",
       "segmento": "Rubia",
       "calibre": "473ml x24 Lata",
-      "dias": 8,
-      "dias_dinamica": 8,
+      "dias": 9,
+      "dias_dinamica": 9,
       "max_dinamica": 0.2,
       "avg_dinamica": 0.2,
       "avg_ptc": 69638.0
@@ -1725,8 +1871,8 @@
       "grupo": "Heineken",
       "segmento": "Rubia",
       "calibre": "330ml x24 Porrón",
-      "dias": 8,
-      "dias_dinamica": 8,
+      "dias": 9,
+      "dias_dinamica": 9,
       "max_dinamica": 0.25,
       "avg_dinamica": 0.25,
       "avg_ptc": 67968.0
@@ -1737,8 +1883,8 @@
       "grupo": "Schneider",
       "segmento": "Lager",
       "calibre": "473ml x24 Lata",
-      "dias": 8,
-      "dias_dinamica": 8,
+      "dias": 9,
+      "dias_dinamica": 9,
       "max_dinamica": 0.25,
       "avg_dinamica": 0.25,
       "avg_ptc": 42372.0
@@ -1749,11 +1895,11 @@
       "grupo": "Miller",
       "segmento": "Cerveza",
       "calibre": "473ml x24 Lata",
-      "dias": 8,
-      "dias_dinamica": 8,
+      "dias": 9,
+      "dias_dinamica": 9,
       "max_dinamica": 0.4,
-      "avg_dinamica": 0.3775,
-      "avg_ptc": 46492.0
+      "avg_dinamica": 0.3766666666666667,
+      "avg_ptc": 46540.88888888889
     },
     {
       "tienda": "La Barra",
@@ -1761,8 +1907,8 @@
       "grupo": "Santa Fe",
       "segmento": "Lager",
       "calibre": "473ml x24 Lata",
-      "dias": 7,
-      "dias_dinamica": 7,
+      "dias": 8,
+      "dias_dinamica": 8,
       "max_dinamica": 0.25,
       "avg_dinamica": 0.25,
       "avg_ptc": 42372.0
@@ -1773,8 +1919,8 @@
       "grupo": "Schneider",
       "segmento": "Cerveza",
       "calibre": "710ml x24",
-      "dias": 8,
-      "dias_dinamica": 8,
+      "dias": 9,
+      "dias_dinamica": 9,
       "max_dinamica": 0.36,
       "avg_dinamica": 0.36,
       "avg_ptc": 51963.0
@@ -1785,8 +1931,8 @@
       "grupo": "Warsteiner",
       "segmento": "Lager",
       "calibre": "473ml Lata",
-      "dias": 2,
-      "dias_dinamica": 2,
+      "dias": 3,
+      "dias_dinamica": 3,
       "max_dinamica": 0.25,
       "avg_dinamica": 0.25,
       "avg_ptc": 56466.0
@@ -1797,11 +1943,11 @@
       "grupo": "Quilmes",
       "segmento": "Sin Alcohol",
       "calibre": "473cc x6",
-      "dias": 6,
-      "dias_dinamica": 6,
-      "max_dinamica": 0.3,
-      "avg_dinamica": 0.3,
-      "avg_ptc": 9030.0
+      "dias": 7,
+      "dias_dinamica": 7,
+      "max_dinamica": 0.4,
+      "avg_dinamica": 0.31428571428571433,
+      "avg_ptc": 8845.714285714286
     },
     {
       "tienda": "CMQ",
@@ -1809,11 +1955,11 @@
       "grupo": "Quilmes",
       "segmento": "Stout",
       "calibre": "473cc x6",
-      "dias": 4,
-      "dias_dinamica": 4,
+      "dias": 5,
+      "dias_dinamica": 5,
       "max_dinamica": 0.3,
-      "avg_dinamica": 0.29000000000000004,
-      "avg_ptc": 10987.0
+      "avg_dinamica": 0.272,
+      "avg_ptc": 11274.0
     },
     {
       "tienda": "CMQ",
@@ -1905,8 +2051,8 @@
       "grupo": "Heineken",
       "segmento": "Rubia",
       "calibre": "710ml x24 Lata",
-      "dias": 4,
-      "dias_dinamica": 4,
+      "dias": 5,
+      "dias_dinamica": 5,
       "max_dinamica": 0.4,
       "avg_dinamica": 0.4,
       "avg_ptc": 77702.0
@@ -1922,6 +2068,18 @@
       "max_dinamica": 0.44,
       "avg_dinamica": 0.44,
       "avg_ptc": 40500.0
+    },
+    {
+      "tienda": "CMQ",
+      "marca": "Corona",
+      "grupo": "Corona",
+      "segmento": "Sin Alcohol",
+      "calibre": "473ml x6",
+      "dias": 1,
+      "dias_dinamica": 1,
+      "max_dinamica": 0.4,
+      "avg_dinamica": 0.4,
+      "avg_ptc": 12960.0
     }
   ],
   "fights": [
@@ -1933,12 +2091,12 @@
     }
   ],
   "meta": {
-    "generado": "2026-08-20T23:56:17+00:00",
-    "total_productos": 33,
+    "generado": "2026-08-21T13:58:55+00:00",
+    "total_productos": 34,
     "productos_por_tienda": {
-      "CMQ": 14,
+      "CMQ": 15,
       "La Barra": 19
     },
-    "corridas": 8
+    "corridas": 9
   }
 }
